@@ -62,21 +62,20 @@ export default function ChatDropdown({ isOpen }) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 50 }}
         className="fixed bottom-0 right-0 mb-24 mr-8 z-20">
-          <div className="right-0 mt-2 w-96 h-full bg-primary-100  rounded-2xl overflow-hidden shadow-xl z-10">
-            <div className='border-b-1 pb-2 pt-4 flex items-center justify-center bg-tertiary-800'>
+          <div className="right-0 mt-2 w-96 h-full bg-primary-100 rounded overflow-hidden shadow-xl z-10">
+            <div className='border-b-1 pb-2 pt-4 flex items-center justify-center bg-quaternary-600'>
               <div className='inline-flex items-center'>
-                <img src={"./images/logo.png"} alt="logo" className='w-5 h-5 ml-4' />
                 <span className='ml-2 text-2xl font-medium text-primary-50'>Chatbot</span>
               </div>
             </div>
             <div className='h-96 flex flex-col space-y-2 max-w-md px-2 overflow-y-auto' ref={messagesContainerRef}>
               <div className='flex flex-col items-start'>
-                <span className='bg-secondary-600 text-primary-50 px-4 py-2 rounded-b-full rounded-tr-full mt-2'>Hi.. how i can help you?</span>
+                <span className='bg-secondary-800 text-primary-50 px-4 py-2 rounded-b-full rounded-tr-full mt-2'>Hi.. how i can help you?</span>
               </div>
               {messages.map((message, index) => (
                 <div key={index} className={`flex flex-col ${message.sender === 'user' ? 'items-end' : 'items-start'}`}>
                   <span
-                    className={`inline-block px-4 py-2 ${message.sender === 'user' ? 'rounded-b-full rounded-tl-full bg-tertiary-600 text-primary-50 ml-10 text-left' : 'bg-secondary-600 text-primary-50 rounded-b-full rounded-tr-full mr-8'} shadow`}>
+                    className={`inline-block px-4 py-2 ${message.sender === 'user' ? 'rounded-b-[30px] rounded-tl-[30px] bg-tertiary-700 text-primary-50 ml-10 text-left' : 'bg-secondary-800 text-primary-50 rounded-b-[30px] rounded-tr-[30px] mr-8'} shadow`}>
                     {message.text}
                   </span>
                 </div>
@@ -89,7 +88,7 @@ export default function ChatDropdown({ isOpen }) {
                 )}
               </div>
             </div>
-            <div className='flex items-center py-2 px-1 bg-tertiary-800'>
+            <div className='flex items-center py-2 px-1 bg-quaternary-600'>
               <input type="text"
                 className='flex-1 rounded-lg px-4 py-2 mr-2 ml-4 placeholder:text-quaternary-300 outline outline-0 focus:outline-0'
                 value={inputValue}

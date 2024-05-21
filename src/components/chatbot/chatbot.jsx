@@ -15,9 +15,8 @@ const Chatbot = () => {
 
   return (
     <div className=''>
-      {/* Tombol "Open Chat" menyesuaikan diri berdasarkan status chat */}
-      <motion.button whileHover={{ scale: [null, 1.1, 1.2] }} onClick={isChatOpen ? closeChat : toggleChat} className="fixed bottom-0 right-0 mb-8 mr-8 bg-[#F05454] hover:bg-[#C04343] font-bold py-2 px-2 rounded-full z-10">
-        <div  className='text-[#F5F5F5] flex items-center justify-start'>
+      <motion.button whileHover={{ scale: [null, 1.1, 1.2] }} onClick={isChatOpen ? closeChat : toggleChat} className="fixed bottom-0 right-0 mb-8 mr-8 bg-primary-400 hover:bg-primary-700 font-bold py-2 px-2 rounded-full z-10">
+        <div  className='text-quaternary-500 flex items-center justify-start'>
           {isChatOpen ? (
             <motion.div whileTap={{ scale: 0.8, rotate: -90, borderRadius: "100%" }}> 
               <motion.svg className="w-10 h-10" transition={{ ease: "easeOut", duration: 2 }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Gruppo&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,6 +11,52 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #080808;
+  background: #ffffff;
   border-radius: 5px;
+}
+
+@layer components {
+  .underline-hover {
+    position: relative;
+  }
+  .underline-hover::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .underline-hover.active-page::after,
+  .underline-hover:hover::after {
+    transform: scaleX(1);
+  }
+}
+.hero-image {
+  --mask-start: 20%;
+  --mask-end: 70%;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #223243 var(--mask-start),
+    #223243 var(--mask-end),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #223243 var(--mask-start),
+    #223243 var(--mask-end),
+    transparent 100%
+  );
+}
+
+.swiper-navigation-custom {
+  --swiper-navigation-size: 44px;
+  --swiper-navigation-top-offset: 50%;
+  --swiper-navigation-sides-offset: 10px;
+  --swiper-navigation-color: #223243;
+  --swiper-pagination-left: auto;
 }
