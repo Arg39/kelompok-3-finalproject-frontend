@@ -1,0 +1,58 @@
+export const authorsTableData = [
+  {
+    img: "/img/team-2.jpeg",
+    name: "Pelanggan A",
+    email: "pelangganA@gmail.com",
+    job: ["Manager", "Organization"],
+    approved: true,
+    datein: "01/04/2024",
+    dateout: "01/04/2024",
+  },
+  {
+    img: "/img/team-1.jpeg",
+    name: "Pelanggan B",
+    email: "pelangganB@gmail.com",
+    job: ["Programator", "Developer"],
+    approved: false,
+    datein: "07/04/2024",
+    dateout: "09/04/2024",
+  },
+  {
+    img: "/img/team-4.jpeg",
+    name: "Pelanggan C",
+    email: "pelangganC@gmail.com",
+    job: ["Executive", "Projects"],
+    approved: true,
+    datein: "15/04/2024",
+    dateout: "19/04/2024",
+  },
+  {
+    img: "/img/team-3.jpeg",
+    name: "Pelanggan D",
+    email: "pelangganD@gmail.com",
+    job: ["Programator", "Developer"],
+    approved: true,
+    datein: "24/12/2024",
+    dateout: "26/12/2024",
+  },
+  {
+    img: "/img/bruce-mars.jpeg",
+    name: "Pelanngan E",
+    email: "pelangganE@gmail.com",
+    job: ["Manager", "Executive"],
+    approved: false,
+    datein: "04/10/2024",
+    dateout: "06/10/2024",
+  },
+  {
+    img: "/img/team-2.jpeg",
+    name: "Pelanggan F",
+    email: "pelangganF@gmail.com",
+    job: ["Programator", "Developer"],
+    approved: false,
+    datein: "14/09/2024",
+    dateout: "16/09/2024",
+  },
+];
+
+export default authorsTableData;

@@ -1,0 +1,7 @@
+/* File: App.css or another CSS file */
+
+.rbc-toolbar-label,
+.rbc-day-slot .rbc-time-slot,
+.rbc-date-cell {
+    color: #333; /* Change this to the color you want */
+}
