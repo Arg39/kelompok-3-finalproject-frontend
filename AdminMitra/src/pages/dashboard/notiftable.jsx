@@ -8,8 +8,8 @@ import {
   Tooltip,
   Progress,
 } from "@material-tailwind/react";
-import GreenButton from '../../../node_modules/@material-tailwind/react/components/GreenButton'
-import RedButton from '../../../node_modules/@material-tailwind/react/components/RedButton'
+import GreenButton from '@material-tailwind/react/components/GreenButton'
+import RedButton from '@material-tailwind/react/components/RedButton'
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "@/data";
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { login, logout } from "../../redux/slices/authSlice";
-import { Link } from "react-router-dom";
+import { logout } from "../../redux/slices/authSlice";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar(props) {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -38,6 +38,18 @@ export default function Navbar(props) {
   }
 
   const opacity = Math.min(0.5, scrollProgress * 0.5);
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
     <nav
@@ -98,30 +110,48 @@ export default function Navbar(props) {
         </div>
         <div>
           {isLoggedIn ? (
-            <button
-              className="p-2 px-4 bg-transparent border border-primary-50 text-primary-50 hover:bg-primary-50 hover:text-quaternary-900 rounded-full flex flex-row items-center"
-              onClick={() => dispatch(logout())}
-            >
-              <svg
-                className="w-5 h-5 mr-2"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
+            <div className="relative">
+              <div
+                className="p-2 px-4 bg-transparent border border-primary-50 text-primary-50 hover:bg-primary-50 hover:text-quaternary-900 rounded-full flex flex-row items-center cursor-pointer"
+                onClick={toggleDropdown}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                />
-              </svg>
-              <p>Account</p>
-            </button>
+                <svg
+                  className="w-5 h-5 mr-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                  />
+                </svg>
+                <p>Account</p>
+              </div>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
+                  <Link
+                    to={"/profil"}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left rounded-md"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left rounded-md"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
-            <button
+            <Link
+              to={"/login"}
               className="p-2 px-4 bg-transparent border border-primary-50 text-primary-50 hover:bg-primary-50 hover:text-quaternary-900 rounded-full flex flex-row items-center"
-              onClick={() => dispatch(login())}
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -138,7 +168,7 @@ export default function Navbar(props) {
                 />
               </svg>
               <p>Sign in</p>
-            </button>
+            </Link>
           )}
         </div>
       </div>

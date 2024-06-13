@@ -1,9 +1,9 @@
 import React from "react";
-import Navbar from "../components/navbar/navbar";
-import Navsewa from "../components/navbar/navSewa";
-import ImageSlide from "../components/imageSlider/imageSlide";
-import Cardsewa from "../components/card/cardSewa";
-import Footer from "../components/footer/footer";
+import Navbar from "../../components/navbar/navbar";
+import Navsewa from "../../components/navbar/navSewa";
+import ImageSlide from "../../components/imageSlider/imageSlide";
+import Cardsewa from "../../components/card/cardSewa";
+import Footer from "../../components/footer/footer";
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -26,7 +26,7 @@ export default function Sewa() {
           SEWA
         </p>
       </div>
-      <Link to={"/testapi"}>api</Link>
+      {/* <Link to={"/testapi"}>api</Link> */}
       <div className="mt-8">
         <Navsewa NavCard={nav} />
       </div>

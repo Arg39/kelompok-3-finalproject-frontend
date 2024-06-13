@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../components/navbar/navbar";
-import Chatbot from "../components/chatbot/chatbot";
-import Footer from "../components/footer/footer";
+import Navbar from "../../components/navbar/navbar";
+import Chatbot from "../../components/chatbot/chatbot";
+import Footer from "../../components/footer/footer";
 
 export default function Tentang() {
   document.body.style.backgroundColor = "#080808";

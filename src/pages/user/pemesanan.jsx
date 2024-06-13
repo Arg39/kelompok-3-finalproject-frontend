@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../components/navbar/navbar";
-import Cardpemesanan from "../components/card/cardPemesanan";
-import Footer from "../components/footer/footer";
+import Navbar from "../../components/navbar/navbar";
+import Cardpemesanan from "../../components/card/cardPemesanan";
+import Footer from "../../components/footer/footer";
 
 export default function Pemesanan() {
   document.body.style.backgroundColor = "#BFC6CD";

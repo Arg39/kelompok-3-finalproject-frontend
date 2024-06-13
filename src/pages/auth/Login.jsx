@@ -1,15 +1,38 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { LoginAsync } from "../../redux/slices/authSlice";
+import Allert from "../../components/allert/allert";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.auth);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const resultAction = await dispatch(LoginAsync({ email, password }));
+    if (LoginAsync.fulfilled.match(resultAction)) {
+      const role = resultAction.payload.data.user.role;
+      if (role === "admin") {
+        navigate("/");
+      } else if (role === "owner") {
+        navigate("/owner");
+      } else {
+        navigate("/");
+      }
+    }
+  };
+
   return (
     <section className="relative w-screen h-screen">
       <div className="absolute inset-0 z-0">
         <img
           src="images/assets/login/imglogin.png"
-          alt="image login"
+          alt="login"
           className="w-full h-full object-cover"
         />
       </div>
@@ -17,7 +40,7 @@ export default function Login() {
         <div className="bg-quaternary-900 bg-opacity-75 p-10 px-20 rounded-lg max-w-xl w-full">
           <div className="flex flex-col justify-center items-center gap-2 mb-6">
             <img
-              className=" lg:w-32 md:mr-4 md:w-10"
+              className="lg:w-32 md:mr-4 md:w-10"
               src="images/logo-2.png"
               alt="Gambar"
             />
@@ -28,7 +51,7 @@ export default function Login() {
               Sign into your account
             </p>
           </div>
-          <form className="flex flex-col gap-2">
+          <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
             <label htmlFor="email" className="text-md text-white">
               Email
             </label>
@@ -38,6 +61,9 @@ export default function Login() {
               name="email"
               id="email"
               placeholder="Masukkan email anda"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
 
             <div className="relative mt-4">
@@ -53,6 +79,9 @@ export default function Login() {
                   name="password"
                   id="password"
                   placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
                 <div
                   onClick={() => setShowPassword(!showPassword)}
@@ -88,16 +117,18 @@ export default function Login() {
               </div>
             </div>
 
+            {error && <Allert message={error} />}
+
             <Link className="text-sm text-white ml-auto mt-2">
               Forget Password?
             </Link>
 
             <button
-              onClick={() => navigate("/Home")}
               type="submit"
               className="rounded-lg bg-primary-100 p-2 text-black text-lg font-semibold mt-5"
+              disabled={loading}
             >
-              Sign In
+              {loading ? "Signing In..." : "Sign In"}
             </button>
             <p className="pt-8 text-center text-white">
               Don’t have an account?{" "}

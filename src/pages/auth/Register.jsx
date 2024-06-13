@@ -1,16 +1,42 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { RegisterAsync } from "../../redux/slices/authSlice";
+import Allert from "../../components/allert/allert";
 
-export default function Login() {
+export default function Register() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("");
+  const handleChange = (event) => {
+    setRole(event.target.value);
+  };
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.auth);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const resultAction = await dispatch(
+      RegisterAsync({ name, email, password, confirmPassword, role })
+    );
+    if (RegisterAsync.fulfilled.match(resultAction)) {
+      navigate("/");
+    }
+  };
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const navigate = useNavigate();
+
   return (
     <section className="relative w-full h-full">
       <div className="w-screen h-screen fixed inset-0 z-0">
         <img
           src="images/assets/register/imgregister.png"
-          alt="image register"
+          alt="Register"
           className="w-full h-full object-cover"
         />
       </div>
@@ -22,15 +48,28 @@ export default function Login() {
               src="images/logo-2.png"
               alt="Gambar"
             />
-            <h1 className="font-bold text-2xl text-primary-50 font-montserrat">
+            <h1 class="font-bold text-2xl text-primary-50 font-montserrat">
               Selamat datang di Rent id
             </h1>
             <p className="font-medium text-white text-md">
               Silakan selesaikan untuk membuat akun Anda
             </p>
           </div>
-          <form className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-md text-white">
+          <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+            <label htmlFor="nama" className="text-md text-white">
+              Nama
+            </label>
+            <input
+              className="p-2 rounded-lg text-primary-50 bg-quaternary-500 placeholder:text-primary-800 border-2 border-white focus:outline-none focus:ring-1 focus:ring-white"
+              type="text"
+              id="name"
+              placeholder="Masukkan nama anda"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+
+            <label htmlFor="email" className="text-md text-white mt-4">
               Email
             </label>
             <input
@@ -39,6 +78,9 @@ export default function Login() {
               name="email"
               id="email"
               placeholder="Masukkan email anda"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
 
             <div className="relative mt-4">
@@ -53,7 +95,10 @@ export default function Login() {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   id="password"
-                  placeholder="Enter your password"
+                  placeholder="Masukkan password anda"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
                 <div
                   onClick={() => setShowPassword(!showPassword)}
@@ -100,8 +145,11 @@ export default function Login() {
                   className="p-2 rounded-lg text-primary-50 bg-quaternary-500 placeholder:text-primary-800 border-2 border-white focus:outline-none focus:ring-1 focus:ring-white w-full"
                   type={showConfirmPassword ? "text" : "password"}
                   name="password"
-                  id="password"
-                  placeholder="Enter your password"
+                  id="confirm-password"
+                  placeholder="Masukkan password anda"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
                 />
                 <div
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -137,16 +185,32 @@ export default function Login() {
               </div>
             </div>
 
-            <Link className="text-sm text-white ml-auto mt-2">
-              Forget Password?
-            </Link>
+            <label htmlFor="role" className="text-md text-white mt-4">
+              Role
+            </label>
+            <select
+              className="p-2 rounded-lg text-primary-50 bg-quaternary-500 border-2 border-white focus:outline-none focus:ring-1 focus:ring-white"
+              name="role"
+              id="role"
+              value={role}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled hidden>
+                pilih opsi anda
+              </option>
+              <option value="user">Penyewa</option>
+              <option value="owner">Pemilik tempat</option>
+            </select>
+
+            {error && <Allert message={error} />}
 
             <button
-              onClick={() => navigate("/Home")}
               type="submit"
               className="rounded-lg bg-primary-100 p-2 text-black text-lg font-semibold mt-5"
+              disabled={loading}
             >
-              Sign In
+              {loading ? "Signing In..." : "Sign In"}
             </button>
             <p className="pt-8 text-center text-white">
               Have an account?{" "}

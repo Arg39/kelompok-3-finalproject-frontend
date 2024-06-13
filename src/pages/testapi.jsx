@@ -4,9 +4,14 @@ import { fetchTest, postTest } from "../redux/slices/testSlice";
 import { Link } from "react-router-dom";
 
 export default function Testapi() {
+  document.body.style.backgroundColor = "#FFFFFF";
   const dispatch = useDispatch();
   const data1 = useSelector((state) => state.test.data1);
   const data2 = useSelector((state) => state.test.data2);
+
+  const users = useSelector((state) => state.auth.users); // Ubah dari `user` menjadi `users`
+  const erroruser = useSelector((state) => state.auth.error);
+
   const isLoading = useSelector((state) => state.test.isLoading);
   const error = useSelector((state) => state.test.error);
 
@@ -55,7 +60,10 @@ export default function Testapi() {
           Submit
         </button>
       </form>
-      <Link to="/sewa">sewa</Link>
+
+      <p>{users["role"]}</p>
+
+      <Link to="/sewa">sewaa</Link>
     </div>
   );
 }
