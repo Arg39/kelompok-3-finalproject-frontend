@@ -9,7 +9,10 @@ import Testapi from "../pages/testapi";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import Profil from "../pages/user/profil";
-import ProtectedRoute from "./protectedRoutes";
+import ProtectedRoutes from "./protectedRoutes";
+import AdminDashboard from "../pages/admin/dashboard";
+import AdminInformasi from "../pages/admin/informasi";
+import OwnerDashboard from "../pages/owner/dashboard";
 
 const AppRoutes = () => {
   return (
@@ -18,14 +21,16 @@ const AppRoutes = () => {
       <Route path="/tentang" element={<Tentang />} />
       <Route path="/sewa" element={<Sewa />} />
       <Route path="/pemesanan" element={<Pemesanan />} />
-      <Route
-        path="/profil"
-        element={
-          <ProtectedRoute allowedRoles={("user", "admin")}>
-            <Profil />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/profil" element={<Profil />} />
+
+      <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/informasi" element={<AdminInformasi />} />
+      </Route>
+      <Route element={<ProtectedRoutes allowedRoles={["owner"]} />}>
+        <Route path="/owner/dashboard" element={<OwnerDashboard />} />
+      </Route>
+
       <Route path="/testapi" element={<Testapi />} />
       <Route path="*" element={<Notfound />} />
       <Route path="/login" element={<Login />} />

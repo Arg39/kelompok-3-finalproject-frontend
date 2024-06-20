@@ -62,19 +62,62 @@ export const fetchUserData = createAsyncThunk(
   }
 );
 
+export const updateUserData = createAsyncThunk(
+  "auth/updateUserData",
+  async (
+    {
+      id,
+      name,
+      email,
+      phone_number,
+      gender,
+      birthdate,
+      address,
+      description,
+      photo,
+    },
+    { rejectWithValue, getState }
+  ) => {
+    const token = getState().auth.token || localStorage.getItem("token");
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone_number", phone_number);
+    formData.append("gender", gender);
+    formData.append("birthdate", birthdate);
+    formData.append("address", address);
+    formData.append("description", description);
+    if (photo) {
+      formData.append("photo", photo);
+    }
+
+    try {
+      const response = await apiLaravel.put(`/updateUser/${id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     status: false,
-    users: null,
-    token: localStorage.getItem("token"), // Load token from localStorage
+    user: null,
+    token: localStorage.getItem("token"),
     error: null,
     loading: false,
   },
   reducers: {
     logout: (state) => {
       state.status = false;
-      state.user = [];
       state.token = null;
       localStorage.removeItem("token");
     },
@@ -92,9 +135,9 @@ const authSlice = createSlice({
       .addCase(LoginAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.status = true;
-        state.users = action.payload.data.user;
+        state.user = action.payload.data.user;
         state.token = action.payload.data.access_token.token;
-        console.log(state.users);
+        console.log(state.user);
         console.log(state.status);
         localStorage.setItem("token", action.payload.data.access_token.token);
       })
@@ -111,7 +154,7 @@ const authSlice = createSlice({
       .addCase(RegisterAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.status = true;
-        state.users = action.payload.data.user;
+        state.user = action.payload.data.user;
         state.token = action.payload.data.access_token.token;
         localStorage.setItem("token", action.payload.data.access_token.token);
       })
@@ -128,11 +171,26 @@ const authSlice = createSlice({
       .addCase(fetchUserData.fulfilled, (state, action) => {
         state.loading = false;
         state.status = true;
-        state.users = action.payload.data.user;
+        state.user = action.payload.data.user;
       })
       .addCase(fetchUserData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+
+      // update user data
+      .addCase(updateUserData.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = true;
+        state.user = action.payload;
+      })
+      .addCase(updateUserData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.errors.message;
       });
   },
 });

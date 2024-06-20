@@ -4,15 +4,33 @@
 @tailwind components;
 @tailwind utilities;
 
-/* width */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Handle */
+/* Scrollbar thumb styling */
 ::-webkit-scrollbar-thumb {
-  background: #ffffff;
   border-radius: 5px;
+}
+
+/* Dark mode styling: scrollbar thumb */
+@media (prefers-color-scheme: dark) {
+  body {
+    --scrollbar-thumb-color: #ffffff; /* Thumb color for dark background */
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+  }
+}
+
+/* Light mode styling: scrollbar thumb */
+@media (prefers-color-scheme: light), not all and (prefers-color-scheme: dark) {
+  body {
+    --scrollbar-thumb-color: #080808; /* Thumb color for light background */
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+  }
 }
 
 @layer components {

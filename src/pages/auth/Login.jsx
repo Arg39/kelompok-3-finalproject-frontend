@@ -18,9 +18,9 @@ export default function Login() {
     if (LoginAsync.fulfilled.match(resultAction)) {
       const role = resultAction.payload.data.user.role;
       if (role === "admin") {
-        navigate("/");
+        navigate("/admin/dashboard");
       } else if (role === "owner") {
-        navigate("/owner");
+        navigate("/owner/dashboard");
       } else {
         navigate("/");
       }

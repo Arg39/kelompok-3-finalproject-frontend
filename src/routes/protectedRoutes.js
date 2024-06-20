@@ -1,19 +1,20 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { users, status } = useSelector((state) => state.auth);
+const ProtectedRoutes = ({ allowedRoles }) => {
+  const user = useSelector((state) => state.auth.user); // Assuming 'user' is singular here
+  const status = useSelector((state) => state.auth.status);
 
   if (!status) {
     return <Navigate to="/login" />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(users["role"])) {
-    return <Navigate to="/notfound" />;
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/login" />;
   }
 
-  return children;
+  return <Outlet />;
 };
 
-export default ProtectedRoute;
+export default ProtectedRoutes;

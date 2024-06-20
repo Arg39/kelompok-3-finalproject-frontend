@@ -2,9 +2,10 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css";
+import baseUrl from "../../redux/api/baseUrl";
 
 export default function ImageSlide() {
-  const url = "http://localhost:8000/";
+  const url = baseUrl;
   const slides = [
     {
       id: 1,
