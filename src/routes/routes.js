@@ -13,6 +13,7 @@ import ProtectedRoutes from "./protectedRoutes";
 import AdminDashboard from "../pages/admin/dashboard";
 import AdminInformasi from "../pages/admin/informasi";
 import OwnerDashboard from "../pages/owner/dashboard";
+import Kamar from "../pages/owner/kamar";
 
 const AppRoutes = () => {
   return (
@@ -29,6 +30,7 @@ const AppRoutes = () => {
       </Route>
       <Route element={<ProtectedRoutes allowedRoles={["owner"]} />}>
         <Route path="/owner/dashboard" element={<OwnerDashboard />} />
+        <Route path="/owner/kamar" element={<Kamar />} />
       </Route>
 
       <Route path="/testapi" element={<Testapi />} />
