@@ -24,7 +24,12 @@ export default function Register() {
       RegisterAsync({ name, email, password, confirmPassword, role })
     );
     if (RegisterAsync.fulfilled.match(resultAction)) {
-      navigate("/");
+      const role = resultAction.payload.data.user.role;
+      if (role === "owner") {
+        navigate("/owner/dashboard");
+      } else {
+        navigate("/");
+      }
     }
   };
 

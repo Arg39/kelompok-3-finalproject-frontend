@@ -7,11 +7,7 @@ export const RegisterAsync = createAsyncThunk(
     { name, email, password, confirmPassword, role },
     { rejectWithValue }
   ) => {
-    console.log("Registration request started...");
-    console.log({ name, email, password, confirmPassword, role });
-
     if (password !== confirmPassword) {
-      console.log("Password mismatch error...");
       return rejectWithValue({ message: "Your password is not the same" });
     } else {
       try {
@@ -21,8 +17,6 @@ export const RegisterAsync = createAsyncThunk(
           password,
           role,
         });
-        console.log("Registration successful...");
-        console.log(response.data);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data);
@@ -56,7 +50,6 @@ export const fetchUserData = createAsyncThunk(
       });
       return { data: response.data, status: true };
     } catch (error) {
-      console.log("Failed to fetch user data:", error);
       throw error;
     }
   }
@@ -127,7 +120,6 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // login
       .addCase(LoginAsync.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -137,16 +129,12 @@ const authSlice = createSlice({
         state.status = true;
         state.user = action.payload.data.user;
         state.token = action.payload.data.access_token.token;
-        console.log(state.user);
-        console.log(state.status);
         localStorage.setItem("token", action.payload.data.access_token.token);
       })
       .addCase(LoginAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.errors.message;
       })
-
-      // register
       .addCase(RegisterAsync.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -162,8 +150,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload.errors.message;
       })
-
-      // fetch user data
       .addCase(fetchUserData.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -177,8 +163,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-
-      // update user data
       .addCase(updateUserData.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -196,5 +180,7 @@ const authSlice = createSlice({
 });
 
 export const { logout, loadPreviousState } = authSlice.actions;
+
+export const selectToken = (state) => state.auth.token;
 
 export default authSlice.reducer;

@@ -11,8 +11,9 @@ import Register from "../pages/auth/Register";
 import Profil from "../pages/user/profil";
 import ProtectedRoutes from "./protectedRoutes";
 import AdminDashboard from "../pages/admin/dashboard";
-import AdminInformasi from "../pages/admin/informasi";
 import OwnerDashboard from "../pages/owner/dashboard";
+import AdminPromosi from "../pages/admin/promosi";
+import OwnerKamar from "../pages/owner/kamar";
 
 const AppRoutes = () => {
   return (
@@ -20,15 +21,20 @@ const AppRoutes = () => {
       <Route path="/" element={<Beranda />} />
       <Route path="/tentang" element={<Tentang />} />
       <Route path="/sewa" element={<Sewa />} />
-      <Route path="/pemesanan" element={<Pemesanan />} />
-      <Route path="/profil" element={<Profil />} />
+
+      <Route element={<ProtectedRoutes allowedRoles={["user"]} />}>
+        <Route path="/pemesanan" element={<Pemesanan />} />
+        <Route path="/profil" element={<Profil />} />
+      </Route>
 
       <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/informasi" element={<AdminInformasi />} />
+        <Route path="/admin/promosi" element={<AdminPromosi />} />
       </Route>
+
       <Route element={<ProtectedRoutes allowedRoles={["owner"]} />}>
         <Route path="/owner/dashboard" element={<OwnerDashboard />} />
+        <Route path="/owner/kamar" element={<OwnerKamar />} />
       </Route>
 
       <Route path="/testapi" element={<Testapi />} />

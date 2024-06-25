@@ -5,6 +5,7 @@ import testReducer from "./slices/testSlice";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
 import storage from "redux-persist/lib/storage";
+import promosiSlice from "./slices/promosiSlice";
 
 const persistConfig = {
   key: "auth",
@@ -17,6 +18,7 @@ const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     sewa: sewaReducer,
+    promosi: promosiSlice,
     test: testReducer,
   },
 });

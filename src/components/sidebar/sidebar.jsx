@@ -24,7 +24,9 @@ export default function Sidebar({ dashboardUrl, profilUrl, otherNav, page }) {
         <Link
           to={dashboardUrl}
           className={`w-full mt-4 font-medium text-sm items-center rounded-lg px-4 py-2.5 flex transition-all duration-200 group cursor-pointer ${
-            page === "dashboard" ? "bg-black text-white" : "text-gray-900"
+            page === "dashboard"
+              ? "bg-black text-primary-50"
+              : "text-quaternary-900"
           }`}
         >
           <svg
