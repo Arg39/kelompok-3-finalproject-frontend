@@ -14,6 +14,7 @@ import AdminDashboard from "../pages/admin/dashboard";
 import OwnerDashboard from "../pages/owner/dashboard";
 import AdminPromosi from "../pages/admin/promosi";
 import OwnerKamar from "../pages/owner/kamar";
+import OwnerGedung from "../pages/owner/gedung";
 
 const AppRoutes = () => {
   return (
@@ -34,6 +35,7 @@ const AppRoutes = () => {
 
       <Route element={<ProtectedRoutes allowedRoles={["owner"]} />}>
         <Route path="/owner/dashboard" element={<OwnerDashboard />} />
+        <Route path="/owner/gedung" element={<OwnerGedung />} />
         <Route path="/owner/kamar" element={<OwnerKamar />} />
       </Route>
 

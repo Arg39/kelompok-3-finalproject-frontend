@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import sewaReducer from "./slices/sewaSlice";
-import testReducer from "./slices/testSlice";
+import regionReducer from "./slices/sewaSlice";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
 import storage from "redux-persist/lib/storage";
 import promosiSlice from "./slices/promosiSlice";
+import buildingSlice from "./slices/buildingSlice";
 
 const persistConfig = {
   key: "auth",
@@ -19,7 +20,8 @@ const store = configureStore({
     auth: persistedAuthReducer,
     sewa: sewaReducer,
     promosi: promosiSlice,
-    test: testReducer,
+    building: buildingSlice,
+    region: regionReducer,
   },
 });
 

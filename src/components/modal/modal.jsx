@@ -73,6 +73,23 @@ export default function Modal({
                   accept={field.accept || ".jpg,.jpeg,.png,.gif"}
                   className="border p-2 mb-4 w-full"
                 />
+              ) : field.type === "select" ? (
+                <select
+                  name={field.title}
+                  value={inputData[field.title]}
+                  onChange={handleChange}
+                  className="border p-2 mb-4 w-full"
+                >
+                  {field.options.map((option, idx) => (
+                    <option
+                      className="text-quaternary-900 text-base"
+                      key={idx}
+                      value={option.value}
+                    >
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               ) : (
                 <input
                   type={field.type}

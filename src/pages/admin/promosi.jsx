@@ -5,7 +5,7 @@ import {
   fetchPromosi,
   addPromosi,
   editPromosi,
-  deletePromosi, // Import the deletePromosi action
+  deletePromosi,
 } from "../../redux/slices/promosiSlice";
 import Modal from "../../components/modal/modal";
 import Table from "../../components/table/table";
@@ -129,7 +129,7 @@ export default function AdminPromosi() {
     }
 
     if (currentId) {
-      dispatch(editPromosi({ id: currentId, formData }))
+      dispatch(editPromosi({ currentId, formData }))
         .then(() => {
           setShowModal(false);
         })

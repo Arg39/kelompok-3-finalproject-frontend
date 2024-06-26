@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import apiLaravel from "../api/apiLaravel";
 
 export const fetchPromosi = createAsyncThunk("fetchPromosi", async () => {
-  const response = await apiLaravel.get("/promosi");
+  const response = await apiLaravel.get("/promotion");
   return response.data;
 });
 
@@ -12,7 +12,7 @@ export const addPromosi = createAsyncThunk(
     const token = localStorage.getItem("token");
 
     try {
-      const response = await apiLaravel.post("/promosi/store", formData, {
+      const response = await apiLaravel.post("/promotion/store", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -33,7 +33,7 @@ export const editPromosi = createAsyncThunk(
 
     try {
       const response = await apiLaravel.put(
-        `/promosi/${id}/update`,
+        `/promotion/${id}/update`,
         formData,
         {
           headers: {
@@ -43,7 +43,7 @@ export const editPromosi = createAsyncThunk(
         }
       );
 
-      return response.data;
+      return response.data; // Return the updated data
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
@@ -56,13 +56,13 @@ export const deletePromosi = createAsyncThunk(
     const token = localStorage.getItem("token");
 
     try {
-      await apiLaravel.delete(`/promosi/${id}/delete`, {
+      await apiLaravel.delete(`/promotion/${id}/delete`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      return id; // Return id of deleted item
+      return id; // Return the id of the deleted item
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
@@ -73,9 +73,10 @@ const promosiSlice = createSlice({
   name: "promosi",
   initialState: {
     isLoading: false,
-    promosiData: null,
+    promosiData: [],
     error: null,
   },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchPromosi.pending, (state) => {
@@ -105,7 +106,13 @@ const promosiSlice = createSlice({
       })
       .addCase(editPromosi.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.promosiData = action.payload.data;
+        // Find and update the edited item in promosiData
+        const index = state.promosiData.findIndex(
+          (item) => item.id === action.payload.data.id
+        );
+        if (index !== -1) {
+          state.promosiData[index] = action.payload.data;
+        }
       })
       .addCase(editPromosi.rejected, (state) => {
         state.isLoading = false;
@@ -116,6 +123,7 @@ const promosiSlice = createSlice({
       })
       .addCase(deletePromosi.fulfilled, (state, action) => {
         state.isLoading = false;
+        // Remove the deleted item from promosiData
         state.promosiData = state.promosiData.filter(
           (item) => item.id !== action.payload
         );
