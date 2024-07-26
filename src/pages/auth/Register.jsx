@@ -208,7 +208,7 @@ export default function Register() {
               <option value="owner">Pemilik tempat</option>
             </select>
 
-            {error && <Allert message={error} />}
+            {/* {error && <Allert message={error} />} */}
 
             <button
               type="submit"

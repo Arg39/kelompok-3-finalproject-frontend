@@ -11,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import SidebarAdmin from "../../components/sidebar/sidebarAdmin";
+import { useSelector } from "react-redux";
 
 ChartJS.register(
   CategoryScale,
@@ -28,16 +29,10 @@ export default function AdminDashboard() {
     { id: 1, created_at: "2024-06-13 17:47:09" },
     { id: 1, created_at: "2024-06-13 17:47:09" },
     { id: 1, created_at: "2024-06-13 17:47:09" },
-    { id: 2, created_at: "2022-04-10 17:47:09" },
-    { id: 2, created_at: "2022-04-10 17:47:09" },
-    { id: 3, created_at: "2022-02-13 17:47:09" },
-    { id: 3, created_at: "2022-02-13 17:47:09" },
-    { id: 3, created_at: "2022-02-13 17:47:09" },
-    { id: 3, created_at: "2022-02-13 17:47:09" },
-    { id: 3, created_at: "2022-02-13 17:47:09" },
-    { id: 3, created_at: "2022-02-13 17:47:09" },
   ];
 
+  const promosiData = useSelector((state) => state.promosi.promosiData);
+  const totalPromosi = promosiData.length;
   const totalUsers = pendaftar.length;
 
   // Extract dates and count occurrences
@@ -105,13 +100,12 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-3 gap-4">
             <div className="p-4 bg-[#0C1844] text-white rounded-lg">
               <p className="font-semibold text-xl ">
-                <span className="text-7xl">{/* data promosi */}</span> Promosi
+                <span className="text-7xl">{totalPromosi}</span> Promosi
               </p>
             </div>
             <div className="p-4 bg-[#C80036] text-white rounded-lg">
               <p className="font-semibold text-xl">
-                <span className="text-7xl">{/* data roel owner */}</span> Owner
-                Gedung
+                <span className="text-7xl">1</span> Owner Gedung
               </p>
             </div>
             <div className="p-4 bg-[#FFF5E1] text-black rounded-lg">

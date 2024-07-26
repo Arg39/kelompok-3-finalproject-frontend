@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/navbar/navbar";
 import Navsewa from "../../components/navbar/navSewa";
 import ImageSlide from "../../components/imageSlider/imageSlide";
 import Cardsewa from "../../components/card/cardSewa";
 import Footer from "../../components/footer/footer";
-
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPromosi } from "../../redux/slices/promosiSlice";
 
 export default function Sewa() {
   document.body.style.backgroundColor = "#BFC6CD";
+  const dispatch = useDispatch();
+  const { promosiData, isLoading } = useSelector((state) => state.promosi);
   const nav = useSelector((state) => state.sewa.nav);
+
+  useEffect(() => {
+    dispatch(fetchPromosi());
+  }, [dispatch]);
 
   return (
     <div>
@@ -26,7 +31,6 @@ export default function Sewa() {
           SEWA
         </p>
       </div>
-      {/* <Link to={"/testapi"}>api</Link> */}
       <div className="mt-8">
         <Navsewa NavCard={nav} />
       </div>
@@ -35,7 +39,10 @@ export default function Sewa() {
           Penawaran Spesial dari Kami untuk Anda!
         </p>
         <div className="mb-20">
-          <ImageSlide />
+          {/* Ensure promosiData is available before passing to ImageSlide */}
+          {promosiData && (
+            <ImageSlide slides={promosiData.map((item) => ({ id: item.id, image: item.image }))} />
+          )}
         </div>
         <p className="flex justify-center mt-12 mb-4 text-2xl text-secondary-900 font-montserrat font-bold">
           Temukan pilihanmu! Sewa Sekarang dan Nikmati Liburan Tak Terlupakan.

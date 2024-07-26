@@ -2,20 +2,8 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css";
-import baseUrl from "../../redux/api/baseUrl";
 
-export default function ImageSlide() {
-  const url = baseUrl;
-  const slides = [
-    {
-      id: 1,
-      image: "images/home/money.jpg",
-      alt: "Image 1",
-    },
-    { id: 2, image: "images/home/property.jpg", alt: "Image 2" },
-    { id: 3, image: url + "images/sewa/promotion/rent.jpg", alt: "Image 3" },
-  ];
-
+export default function ImageSlide({ slides }) {
   return (
     <div className="w-full max-w-[1200px] mx-auto">
       <Swiper
@@ -36,8 +24,8 @@ export default function ImageSlide() {
           <SwiperSlide key={slide.id}>
             <img
               src={slide.image}
-              alt={slide.alt}
               className="w-full h-64 object-cover"
+              alt="Promotion"
             />
           </SwiperSlide>
         ))}

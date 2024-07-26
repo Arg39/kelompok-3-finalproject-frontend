@@ -6,6 +6,7 @@ export default function Modal({
   button,
   title,
   contentModal,
+  onChange, // New prop for onChange callback
 }) {
   const [inputData, setInputData] = useState(
     contentModal.reduce(
@@ -29,6 +30,11 @@ export default function Modal({
       setInputData((prevData) => ({ ...prevData, [name]: files[0] }));
     } else {
       setInputData((prevData) => ({ ...prevData, [name]: value }));
+    }
+
+    // Call onChange callback to propagate changes to parent
+    if (onChange) {
+      onChange(name, value); // Pass field name and value to parent
     }
   };
 

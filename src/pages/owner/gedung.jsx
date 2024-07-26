@@ -58,7 +58,7 @@ export default function OwnerGedung() {
     type: "",
     address: "",
     description: "",
-    regency: "", // Changed to regency
+    regency: "",
   });
 
   const handleOpenModal = () => {
@@ -68,24 +68,20 @@ export default function OwnerGedung() {
   };
 
   const handleSaveData = () => {
-    const dataToSend = {
-      user_id: userId,
-      name: formData.name,
-      type: formData.type,
-      address: formData.address,
-      description: formData.description,
-      regency: formData.regency,
-    };
+    // Validate that all required fields are present
+    const { name, type, address, description, regency } = formData;
+    if (!name || !type || !address || !description || !regency) {
+      console.error("All fields are required.");
+      return;
+    }
 
-    dispatch(storeBuilding(dataToSend))
+    dispatch(storeBuilding(formData))
       .then(() => {
-        // Refresh buildingData after successful save
         dispatch(fetchBuildingUser(userId));
         setShowModal(false);
       })
       .catch((error) => {
         console.error("Error saving data:", error);
-        // Handle error state or display error message
       });
   };
 
@@ -93,8 +89,11 @@ export default function OwnerGedung() {
     setShowModal(false);
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleModalChange = (name, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -133,8 +132,7 @@ export default function OwnerGedung() {
                       Type: {building.type} <br />
                       Address: {building.address} <br />
                       Description: {building.description} <br />
-                      Regency: {building.regency.toLowerCase()}{" "}
-                      {/* Adjusted regency field */}
+                      Regency: {building.regency.toLowerCase()}
                     </p>
                   </div>
                   <div className="w-full flex justify-center mt-4">
@@ -157,6 +155,7 @@ export default function OwnerGedung() {
           }}
           contentModal={modalData}
           title={modalTitle}
+          onChange={handleModalChange}
         />
       </div>
     </div>

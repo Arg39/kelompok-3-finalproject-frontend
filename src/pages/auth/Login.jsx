@@ -117,7 +117,7 @@ export default function Login() {
               </div>
             </div>
 
-            {error && <Allert message={error} />}
+            {/* {error && <Allert message={error} />} */}
 
             <Link className="text-sm text-white ml-auto mt-2">
               Forget Password?
